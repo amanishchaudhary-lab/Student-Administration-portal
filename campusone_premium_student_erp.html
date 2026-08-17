@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusOne | Student ERP</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#182033}
+button,input,select{font:inherit}.hidden{display:none!important}
+:root{--primary:#315bea;--primary2:#6948e8;--ink:#182033;--muted:#697386;--line:#e5e9f0;--card:#fff;--green:#159447;--orange:#d88909;--red:#d53a3a}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#eef3ff,#f8f7ff)}
+.login-box{width:410px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 25px 70px #25345b18}.logo{display:flex;gap:12px;align-items:center;margin-bottom:22px}.logo-icon{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff;font-size:25px}.logo h2{margin:0;font-size:22px}.logo p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.roles{display:grid;grid-template-columns:1fr 1fr;background:#f3f5f9;padding:4px;border-radius:10px;margin-bottom:18px}.roles button{border:0;padding:10px;border-radius:7px;background:transparent;color:#687386;cursor:pointer}.roles button.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:0 2px 8px #0000000b}
+.f{margin-bottom:13px}.f label{font-size:12px;color:#586477;display:block;margin-bottom:6px}.f input{width:100%;padding:12px;border:1px solid #d8dee8;border-radius:9px;outline:0}.f input:focus{border-color:var(--primary)}.login-btn,.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:0}.login-btn{width:100%;padding:12px;border-radius:9px;font-weight:700;cursor:pointer}.demo{margin-top:14px;padding:11px;background:#f7f9fc;border-radius:9px;color:#6a7485;font-size:11px;line-height:1.6}.err{color:var(--red);font-size:12px;margin:6px 0;display:none}
+
+header{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:20}.brand{display:flex;align-items:center;gap:9px;font-weight:800}.brand .mini{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff}.header-actions{display:flex;align-items:center;gap:9px}.role{padding:8px 11px;background:#eef2ff;color:var(--primary);border-radius:8px;font-size:12px;font-weight:700}.iconbtn,.logout{border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:8px;cursor:pointer}.logout{color:#c52f2f;background:#fff4f4}
+.layout{display:flex;min-height:calc(100vh - 68px)}aside{width:235px;background:#121a2a;color:#fff;padding:16px 11px;flex-shrink:0;position:relative}.section-label{font-size:10px;color:#8490a6;text-transform:uppercase;padding:12px 10px 6px}.nav a{display:flex;align-items:center;gap:10px;text-decoration:none;color:#aeb8ca;padding:10px 11px;border-radius:8px;margin:2px 0;font-size:13px}.nav a:hover,.nav a.active{background:#202d46;color:#fff}.nav a.active{box-shadow:inset 3px 0 var(--primary)}.dev{position:absolute;bottom:12px;left:15px;color:#707c91;font-size:10px}
+main{flex:1;padding:26px;max-width:1400px;margin:auto;width:100%}.page{display:none}.page.active{display:block}.title{margin-bottom:20px}.title h1{font-size:27px;margin:0 0 5px}.title p{margin:0;color:var(--muted);font-size:13px}
+.welcome{background:linear-gradient(120deg,#243b8e,#5a3cc6);color:#fff;border-radius:15px;padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}.welcome h2{margin:0 0 5px}.welcome p{margin:0;color:#dbe3ff;font-size:13px}.datebox{text-align:right;font-size:12px;color:#e3e8ff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:16px}.stat{position:relative}.stat small{color:var(--muted);font-size:11px}.stat b{display:block;font-size:25px;margin:7px 0}.stat span{font-size:11px;color:var(--muted)}.stat .dot{position:absolute;right:17px;top:18px;width:9px;height:9px;border-radius:50%;background:var(--primary)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.card h3{margin:0;font-size:15px}.link{border:0;background:transparent;color:var(--primary);cursor:pointer;font-size:12px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);font-size:12px}th{background:#fafbfc;color:#697386;font-weight:600}.badge{padding:5px 8px;border-radius:6px;font-size:10px}.ok{background:#eaf8ef;color:#15803d}.pending{background:#fff5dc;color:#a96600}.danger{background:#ffe9e9;color:#c62d2d}.info{background:#eaf0ff;color:#315bea}
+.profile{display:grid;grid-template-columns:95px 1fr;gap:18px}.avatar{width:90px;height:90px;border-radius:18px;background:linear-gradient(135deg,#dfe7ff,#eee6ff);display:grid;place-items:center;color:var(--primary);font-size:28px;font-weight:800}.details{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.detail{background:#f8fafc;border:1px solid var(--line);padding:11px;border-radius:8px}.detail small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.detail b{font-size:12px}
+.progress{height:8px;background:#edf0f5;border-radius:10px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:10px}
+.notice{padding:13px;border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:8px;margin-bottom:9px;background:#fff}.notice b{font-size:12px;display:block}.notice small{color:var(--muted);font-size:11px;display:block;margin-top:4px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:8px;padding:10px 13px;cursor:pointer;background:#eef2f7;color:#334057;font-size:12px}.btn.primary{color:#fff}.btn.green{background:#eaf8ef;color:#15803d}.btn.red{background:#ffeded;color:#c52e2e}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field label{display:block;font-size:11px;color:#687386;margin-bottom:5px}.field input,.field select,.search{width:100%;padding:10px;border:1px solid #d8dee8;border-radius:8px;background:#fff;outline:0}.field input:focus,.field select:focus,.search:focus{border-color:var(--primary)}
+.searchbar{display:flex;gap:8px;margin-bottom:15px}.search{flex:1}
+.timeline{border-left:2px solid #e1e6f1;padding-left:17px}.event{position:relative;margin-bottom:18px}.event:before{content:"";position:absolute;left:-24px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--primary)}.event b{font-size:12px}.event small{display:block;color:var(--muted);margin-top:4px;font-size:11px}
+.empty{text-align:center;padding:25px;color:var(--muted)}.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:12px 16px;border-radius:9px;font-size:12px;box-shadow:0 10px 30px #0002;display:none;z-index:50}
+@media(max-width:950px){aside{width:70px}.nav a span,.section-label,.dev{display:none}.nav a{justify-content:center}.grid{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){header{padding:0 13px}.brand span{display:none}.role{display:none}main{padding:14px}.welcome{display:block}.datebox{text-align:left;margin-top:10px}.grid,.grid3,.details,.form-grid{grid-template-columns:1fr}.profile{grid-template-columns:1fr}.card{padding:14px}.title h1{font-size:22px}table{min-width:650px}.searchbar{display:block}.searchbar .btn{margin-top:8px}}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+<div class="login-box">
+ <div class="logo"><div class="logo-icon">🎓</div><div><h2>CampusOne</h2><p>Student & Administration Portal</p></div></div>
+ <div class="roles"><button id="studentRole" class="active">🎓 Student</button><button id="adminRole">🛡️ Admin</button></div>
+ <div class="f"><label>Username / ID</label><input id="username" placeholder="Enter username"></div>
+ <div class="f"><label>Password</label><input id="password" type="password" placeholder="Enter password"></div>
+ <div id="err" class="err">Invalid login credentials.</div>
+ <button class="login-btn" id="loginBtn">Sign in to Portal</button>
+ <div class="demo" id="demo"><b>Student Demo</b><br>Username: student &nbsp; Password: student123<br>Students have view-only access.</div>
+</div>
+</div>
+
+<div id="app" class="hidden">
+<header>
+ <div class="brand"><div class="mini">🎓</div><span>CampusOne</span></div>
+ <div class="header-actions"><button class="iconbtn" id="theme">☾</button><span class="role" id="roleBadge"></span><button class="logout" id="logout">Logout</button></div>
+</header>
+<div class="layout">
+<aside>
+<nav class="nav">
+ <div class="section-label">Overview</div>
+ <a href="#dashboard" data-page="dashboard" class="active">⌂ <span>Dashboard</span></a>
+ <a href="#profile" data-page="profile">👤 <span>My Profile</span></a>
+ <a href="#academics" data-page="academics">▣ <span>Academics</span></a>
+ <a href="#attendance" data-page="attendance">✓ <span>Attendance</span></a>
+ <a href="#exams" data-page="exams">📝 <span>Examination</span></a>
+ <div class="section-label">Student Services</div>
+ <a href="#fees" data-page="fees">₹ <span>Fees & Payments</span></a>
+ <a href="#library" data-page="library">📖 <span>Library</span></a>
+ <a href="#placement" data-page="placement">💼 <span>Placement</span></a>
+ <a href="#events" data-page="events">★ <span>Campus Events</span></a>
+ <a href="#transport" data-page="transport">🚌 <span>Transport</span></a>
+ <a href="#hostel" data-page="hostel">⌂ <span>Hostel</span></a>
+ <div class="section-label">Communication</div>
+ <a href="#notices" data-page="notices">! <span>Notices</span></a>
+ <a href="#notifications" data-page="notifications">🔔 <span>Notifications</span></a>
+ <a href="#help" data-page="help">? <span>Help Desk</span></a>
+ <div class="section-label">Administration</div>
+ <a href="#admin" data-page="admin" id="adminNav">⚙ <span>Admin Panel</span></a>
+</nav>
+<div class="dev">Developed by <b>Manish Chaudhary</b></div>
+</aside>
+
+<main>
+<section class="page active" id="page-dashboard">
+ <div class="welcome"><div><h2>Good morning, <span id="welcomeName">Aarav</span> 👋</h2><p>Welcome to your CampusOne student portal.</p></div><div class="datebox">Monday, 17 August 2026<br><b>Semester VII</b></div></div>
+ <div class="grid">
+  <div class="card stat"><span class="dot"></span><small>Current CGPA</small><b>8.72</b><span>↑ 0.31 from last semester</span></div>
+  <div class="card stat"><span class="dot"></span><small>Attendance</small><b>92%</b><span>Above required 75%</span></div>
+  <div class="card stat"><span class="dot"></span><small>Pending Fees</small><b>₹12,960</b><span>Due 30 September</span></div>
+  <div class="card stat"><span class="dot"></span><small>Assignments</small><b>2</b><span>Due this week</span></div>
+ </div>
+ <div class="grid3">
+  <div class="card"><div class="card-head"><h3>Academic Progress</h3><button class="link" data-go="academics">View details</button></div><small style="color:#697386">Degree completion</small><div style="display:flex;justify-content:space-between;margin:10px 0;font-size:12px"><b>78%</b><span>31 / 40 subjects</span></div><div class="progress"><i style="width:78%"></i></div></div>
+  <div class="card"><div class="card-head"><h3>Next Examination</h3><span class="badge pending">16 days</span></div><b>Data Structures</b><p style="font-size:12px;color:#697386">02 September 2026 • 10:00 AM</p><span class="badge info">Room A-201</span></div>
+  <div class="card"><div class="card-head"><h3>Placement Status</h3><span class="badge ok">Eligible</span></div><b>5 Companies Open</b><p style="font-size:12px;color:#697386">3 applications submitted</p><button class="btn primary" data-go="placement">Explore Jobs</button></div>
+ </div>
+ <div class="grid3">
+  <div class="card"><div class="card-head"><h3>Latest Notices</h3><button class="link" data-go="notices">See all</button></div><div class="notice"><b>Exam Form Submission</b><small>Deadline: 30 August 2026</small></div><div class="notice"><b>Placement Drive</b><small>Campus drive on 3 September</small></div></div>
+  <div class="card"><div class="card-head"><h3>Upcoming</h3><button class="link" data-go="events">Calendar</button></div><div class="timeline"><div class="event"><b>Tech Fest Registration</b><small>28 Aug • Main Auditorium</small></div><div class="event"><b>Placement Drive</b><small>03 Sep • Seminar Hall</small></div></div></div>
+  <div class="card"><div class="card-head"><h3>Quick Actions</h3></div><div class="actions"><button class="btn primary" data-go="fees">Pay Fees</button><button class="btn" data-go="library">Library</button><button class="btn" data-go="help">Help Desk</button></div></div>
+ </div>
+</section>
+
+<section class="page" id="page-profile">
+ <div class="title"><h1>My Profile</h1><p>Your personal, contact and academic information.</p></div>
+ <div class="card profile"><div class="avatar">AK</div><div><h2 id="profileName" style="margin:0">Aarav Kumar</h2><p style="color:var(--muted);font-size:12px">Computer Engineering • 4th Year • Student ID STU-2048</p><div class="details" id="profileDetails"></div></div></div>
+ <div class="card"><div class="card-head"><h3>Academic Snapshot</h3><span class="badge ok">Active Student</span></div><div class="grid3"><div class="detail"><small>CGPA</small><b>8.72 / 10</b></div><div class="detail"><small>Credits Completed</small><b>142 / 180</b></div><div class="detail"><small>Class Rank</small><b>12 / 86</b></div></div></div>
+</section>
+
+<section class="page" id="page-academics">
+ <div class="title"><h1>Academics</h1><p>Results, subjects and assignment progress.</p></div>
+ <div class="grid"><div class="card stat"><small>CGPA</small><b>8.72</b><span>Excellent</span></div><div class="card stat"><small>Credits</small><b>142</b><span>Completed</span></div><div class="card stat"><small>Backlogs</small><b>0</b><span>Clear record</span></div><div class="card stat"><small>Rank</small><b>12</b><span>In batch</span></div></div>
+ <div class="card"><div class="card-head"><h3>Semester Performance</h3></div><table><tr><th>Semester</th><th>SGPA</th><th>Credits</th><th>Backlogs</th><th>Result</th></tr><tr><td>VII</td><td>8.65</td><td>24</td><td>0</td><td><span class="badge ok">PASS</span></td></tr><tr><td>VI</td><td>8.41</td><td>24</td><td>0</td><td><span class="badge ok">PASS</span></td></tr><tr><td>V</td><td>8.72</td><td>23</td><td>0</td><td><span class="badge ok">PASS</span></td></tr><tr><td>IV</td><td>8.11</td><td>23</td><td>0</td><td><span class="badge ok">PASS</span></td></tr></table></div>
+ <div class="card"><h3>Current Assignments</h3><br><table><tr><th>Assignment</th><th>Subject</th><th>Due</th><th>Status</th></tr><tr><td>React Mini Project</td><td>Web Development</td><td>22 Aug</td><td><span class="badge pending">Pending</span></td></tr><tr><td>SQL Case Study</td><td>DBMS</td><td>25 Aug</td><td><span class="badge ok">Submitted</span></td></tr><tr><td>Network Report</td><td>Networks</td><td>30 Aug</td><td><span class="badge pending">Pending</span></td></tr></table></div>
+</section>
+
+<section class="page" id="page-attendance">
+ <div class="title"><h1>Attendance</h1><p>Track your subject-wise attendance.</p></div>
+ <div class="grid"><div class="card stat"><small>Overall</small><b>92%</b><span>Good standing</span></div><div class="card stat"><small>Present</small><b>118</b><span>Working days</span></div><div class="card stat"><small>Absent</small><b>10</b><span>Total absences</span></div><div class="card stat"><small>Required</small><b>75%</b><span>Minimum</span></div></div>
+ <div class="card"><table><tr><th>Subject</th><th>Faculty</th><th>Attendance</th><th>Percentage</th><th>Status</th></tr><tr><td>Data Structures</td><td>Dr. Mehta</td><td>24 / 25</td><td>96%</td><td><span class="badge ok">Excellent</span></td></tr><tr><td>Web Development</td><td>Prof. Shah</td><td>22 / 24</td><td>92%</td><td><span class="badge ok">Good</span></td></tr><tr><td>DBMS</td><td>Dr. Patel</td><td>21 / 23</td><td>91%</td><td><span class="badge ok">Good</span></td></tr><tr><td>Networks</td><td>Prof. Verma</td><td>20 / 22</td><td>91%</td><td><span class="badge ok">Good</span></td></tr></table></div>
+</section>
+
+<section class="page" id="page-exams">
+ <div class="title"><h1>Examination</h1><p>Upcoming examinations and examination information.</p></div>
+ <div class="card"><div class="card-head"><h3>Upcoming Exam Timetable</h3><span class="badge info">Semester VII</span></div><table><tr><th>Date</th><th>Time</th><th>Subject</th><th>Room</th><th>Type</th></tr><tr><td>02 Sep 2026</td><td>10:00 AM</td><td>Data Structures</td><td>A-201</td><td>End Sem</td></tr><tr><td>05 Sep 2026</td><td>10:00 AM</td><td>DBMS</td><td>A-203</td><td>End Sem</td></tr><tr><td>08 Sep 2026</td><td>10:00 AM</td><td>Web Development</td><td>Lab-2</td><td>Practical</td></tr><tr><td>11 Sep 2026</td><td>10:00 AM</td><td>Computer Networks</td><td>B-102</td><td>End Sem</td></tr></table></div>
+</section>
+
+<section class="page" id="page-fees">
+ <div class="title"><h1>Fees & Payments</h1><p>Manage tuition fees and payment receipts.</p></div>
+ <div class="grid"><div class="card stat"><small>Total Fees</small><b>₹72,000</b><span>Academic year 2026–27</span></div><div class="card stat"><small>Paid</small><b>₹59,040</b><span>82% completed</span></div><div class="card stat"><small>Pending</small><b>₹12,960</b><span>Due 30 Sep</span></div><div class="card stat"><small>Receipts</small><b>2</b><span>Available</span></div></div>
+ <div class="card"><div class="card-head"><h3>Payment History</h3><button class="btn primary" id="payBtn">Pay Pending ₹12,960</button></div><table><tr><th>Date</th><th>Receipt</th><th>Amount</th><th>Mode</th><th>Status</th></tr><tr><td>10 Aug 2026</td><td>REC-2048-02</td><td>₹30,000</td><td>Online</td><td><span class="badge ok">Paid</span></td></tr><tr><td>10 Apr 2026</td><td>REC-2048-01</td><td>₹29,040</td><td>Online</td><td><span class="badge ok">Paid</span></td></tr><tr><td>30 Sep 2026</td><td>Pending</td><td>₹12,960</td><td>—</td><td><span class="badge pending">Pending</span></td></tr></table></div>
+</section>
+
+<section class="page" id="page-library">
+ <div class="title"><h1>Library</h1><p>Books, due dates and library account.</p></div>
+ <div class="grid"><div class="card stat"><small>Issued Books</small><b>4</b><span>Currently with you</span></div><div class="card stat"><small>Returned</small><b>18</b><span>This year</span></div><div class="card stat"><small>Due Soon</small><b>1</b><span>Within 7 days</span></div><div class="card stat"><small>Fine</small><b>₹0</b><span>No pending fine</span></div></div>
+ <div class="card"><table><tr><th>Book</th><th>Author</th><th>Issue Date</th><th>Due Date</th><th>Status</th></tr><tr><td>Clean Code</td><td>Robert C. Martin</td><td>05 Aug</td><td>25 Aug</td><td><span class="badge pending">Due Soon</span></td></tr><tr><td>Python Basics</td><td>Mark Lutz</td><td>10 Aug</td><td>30 Aug</td><td><span class="badge ok">Active</span></td></tr><tr><td>Database Systems</td><td>Elmasri</td><td>12 Aug</td><td>02 Sep</td><td><span class="badge ok">Active</span></td></tr></table></div>
+</section>
+
+<section class="page" id="page-placement">
+ <div class="title"><h1>Placement & Career</h1><p>Campus opportunities and application tracking.</p></div>
+ <div class="grid"><div class="card stat"><small>Eligible Companies</small><b>5</b><span>Based on your profile</span></div><div class="card stat"><small>Applied</small><b>3</b><span>Applications</span></div><div class="card stat"><small>Shortlisted</small><b>2</b><span>Interview stage</span></div><div class="card stat"><small>Profile Score</small><b>86%</b><span>Good</span></div></div>
+ <div class="card"><table><tr><th>Company</th><th>Role</th><th>Package</th><th>Deadline</th><th>Status</th></tr><tr><td>TechNova Solutions</td><td>Software Developer</td><td>₹6.5 LPA</td><td>20 Aug</td><td><span class="badge ok">Shortlisted</span></td></tr><tr><td>DataSphere</td><td>Data Analyst</td><td>₹5.2 LPA</td><td>24 Aug</td><td><span class="badge info">Applied</span></td></tr><tr><td>CloudBridge</td><td>Frontend Developer</td><td>₹5.8 LPA</td><td>29 Aug</td><td><span class="badge pending">Open</span></td></tr><tr><td>FinCore</td><td>Python Developer</td><td>₹6.0 LPA</td><td>31 Aug</td><td><span class="badge pending">Open</span></td></tr></table></div>
+</section>
+
+<section class="page" id="page-events">
+ <div class="title"><h1>Campus Events</h1><p>Activities, workshops and student events.</p></div>
+ <div class="grid3"><div class="card"><h3>Innovation & Tech Fest</h3><p style="font-size:12px;color:var(--muted)">28 Aug • Main Auditorium</p><span class="badge info">Registration Open</span><br><br><button class="btn primary eventBtn">Register</button></div><div class="card"><h3>Placement Drive</h3><p style="font-size:12px;color:var(--muted)">03 Sep • Seminar Hall</p><span class="badge ok">Eligible</span><br><br><button class="btn primary eventBtn">Register</button></div><div class="card"><h3>Annual Sports Meet</h3><p style="font-size:12px;color:var(--muted)">15 Sep • College Ground</p><span class="badge pending">Coming Soon</span><br><br><button class="btn eventBtn">View Event</button></div></div>
+</section>
+
+<section class="page" id="page-transport">
+ <div class="title"><h1>Transport</h1><p>Your assigned campus bus and route information.</p></div>
+ <div class="grid"><div class="card stat"><small>Route</small><b>R-07</b><span>Ahmedabad East</span></div><div class="card stat"><small>Bus No.</small><b>GJ-01-AB-2048</b><span>Campus Shuttle</span></div><div class="card stat"><small>Pickup</small><b>8:05 AM</b><span>Daily</span></div><div class="card stat"><small>Pass</small><b>Active</b><span>Valid till Mar 2027</span></div></div>
+ <div class="card"><h3>Route Stops</h3><br><table><tr><th>Stop</th><th>Arrival</th><th>Status</th></tr><tr><td>Vastral</td><td>7:35 AM</td><td>Scheduled</td></tr><tr><td>Maninagar</td><td>7:50 AM</td><td>Scheduled</td></tr><tr><td>Isanpur</td><td>8:05 AM</td><td>Your Stop</td></tr><tr><td>Campus Gate</td><td>8:25 AM</td><td>Final Stop</td></tr></table></div>
+</section>
+
+<section class="page" id="page-hostel">
+ <div class="title"><h1>Hostel</h1><p>Accommodation and room information.</p></div>
+ <div class="grid"><div class="card stat"><small>Hostel</small><b>Block B</b><span>Male Residence</span></div><div class="card stat"><small>Room</small><b>B-204</b><span>2nd Floor</span></div><div class="card stat"><small>Room Type</small><b>Double</b><span>Shared</span></div><div class="card stat"><small>Status</small><b>Active</b><span>2026–27</span></div></div>
+ <div class="card"><h3>Hostel Services</h3><br><div class="details"><div class="detail"><small>Warden</small><b>Mr. Sharma</b></div><div class="detail"><small>Mess</small><b>Block B Dining Hall</b></div><div class="detail"><small>Wi-Fi</small><b>Active</b></div><div class="detail"><small>Complaint Desk</small><b>Room Service Portal</b></div></div></div>
+</section>
+
+<section class="page" id="page-notices">
+ <div class="title"><h1>Notices</h1><p>Official college announcements.</p></div>
+ <div class="card"><div class="notice"><b>Semester Examination Form Submission</b><small>Academic Office • Deadline 30 August 2026</small></div><div class="notice"><b>Placement Drive – Software Roles</b><small>Training & Placement Cell • 03 September 2026</small></div><div class="notice"><b>Technology Fest Registration</b><small>Student Affairs • Registration closes 25 August 2026</small></div><div class="notice"><b>Library Book Return Reminder</b><small>Central Library • Please return books before due date</small></div></div>
+</section>
+
+<section class="page" id="page-notifications">
+ <div class="title"><h1>Notifications</h1><p>Your latest portal activity.</p></div>
+ <div class="card"><div class="notice"><b>New assignment added: React Mini Project</b><small>Today • Web Development</small></div><div class="notice"><b>Payment receipt generated</b><small>10 August • Finance Office</small></div><div class="notice"><b>You are eligible for TechNova placement drive</b><small>09 August • Placement Cell</small></div><div class="notice"><b>Library book due in 8 days</b><small>17 August • Library</small></div></div>
+</section>
+
+<section class="page" id="page-help">
+ <div class="title"><h1>Help Desk</h1><p>Create and track support requests.</p></div>
+ <div class="grid3"><div class="card"><h3>Academic Help</h3><p style="font-size:12px;color:var(--muted)">Results, attendance and examination queries.</p><button class="btn primary supportBtn">Create Request</button></div><div class="card"><h3>Finance Help</h3><p style="font-size:12px;color:var(--muted)">Fees, receipts and payment issues.</p><button class="btn primary supportBtn">Create Request</button></div><div class="card"><h3>IT Support</h3><p style="font-size:12px;color:var(--muted)">Portal, account and technical issues.</p><button class="btn primary supportBtn">Create Request</button></div></div>
+ <div class="card"><h3>Support Contact</h3><br><div class="details"><div class="detail"><small>Email</small><b>helpdesk@campusone.demo</b></div><div class="detail"><small>Phone</small><b>+91 79XXXXXX00</b></div><div class="detail"><small>Hours</small><b>Mon–Fri, 9 AM–5 PM</b></div><div class="detail"><small>Response</small><b>Within 24 hours</b></div></div></div>
+</section>
+
+<section class="page" id="page-admin">
+ <div class="title"><h1>Admin Panel</h1><p>Manage student information and portal records.</p></div>
+ <div class="grid"><div class="card stat"><small>Total Students</small><b>1,248</b><span>Registered</span></div><div class="card stat"><small>Active Today</small><b>1,105</b><span>Attendance</span></div><div class="card stat"><small>Pending Requests</small><b>18</b><span>Help desk</span></div><div class="card stat"><small>Portal</small><b>Online</b><span>All systems normal</span></div></div>
+ <div class="card"><div class="card-head"><h3>Edit Student Profile</h3><span class="badge info">Admin Only</span></div><div class="form-grid"><div class="field"><label>Full Name</label><input id="editName"></div><div class="field"><label>Email</label><input id="editEmail"></div><div class="field"><label>Phone</label><input id="editPhone"></div><div class="field"><label>Course</label><select id="editCourse"><option>Computer Engineering</option><option>Mechanical Engineering</option><option>Civil Engineering</option><option>Electrical Engineering</option></select></div><div class="field"><label>Year</label><select id="editYear"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div><div class="field"><label>CGPA</label><input id="editCgpa"></div></div><br><div class="actions"><button class="btn primary" id="saveBtn">Save Changes</button><button class="btn" id="resetBtn">Reset</button></div></div>
+ <div class="card"><h3>Admin Permissions</h3><br><div class="details"><div class="detail"><small>Students</small><b>View / Edit</b></div><div class="detail"><small>Academic Records</small><b>Manage</b></div><div class="detail"><small>Notices</small><b>Publish</b></div><div class="detail"><small>System Status</small><b style="color:var(--green)">Online</b></div></div></div>
+</section>
+</main></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let role="student",logged=false;
+let profile=JSON.parse(localStorage.getItem("campusProfile")||'{"name":"Aarav Kumar","email":"aarav.k@example.com","phone":"+91 98XXXXXX42","course":"Computer Engineering","year":"4th Year","cgpa":"8.72"}');
+const $=id=>document.getElementById(id);
+function toast(msg){$("toast").textContent=msg;$("toast").style.display="block";setTimeout(()=>{$("toast").style.display="none"},2400)}
+function renderProfile(){
+ $("profileName").textContent=profile.name;
+ $("welcomeName").textContent=profile.name.split(" ")[0];
+ $("profileDetails").innerHTML=`<div class="detail"><small>Student ID</small><b>STU-2048</b></div><div class="detail"><small>Roll Number</small><b>CE-2023-048</b></div><div class="detail"><small>Email</small><b>${profile.email}</b></div><div class="detail"><small>Phone</small><b>${profile.phone}</b></div><div class="detail"><small>Course</small><b>${profile.course}</b></div><div class="detail"><small>Year</small><b>${profile.year}</b></div>`;
+}
+function fillAdmin(){$("editName").value=profile.name;$("editEmail").value=profile.email;$("editPhone").value=profile.phone;$("editCourse").value=profile.course;$("editYear").value=profile.year;$("editCgpa").value=profile.cgpa}
+function go(page){location.hash=page}
+function loadPage(){
+ if(!logged)return;
+ let p=location.hash.replace("#","")||"dashboard";
+ if(role!=="admin"&&p==="admin")p="dashboard";
+ document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+p));
+ document.querySelectorAll(".nav a").forEach(x=>x.classList.toggle("active",x.dataset.page===p));
+ if(p==="admin")fillAdmin();window.scrollTo(0,0);
+}
+function login(){
+ let u=$("username").value.trim(),pw=$("password").value;
+ let ok=(role==="student"&&u==="student"&&pw==="student123")||(role==="admin"&&u==="admin"&&pw==="admin123");
+ if(!ok){$("err").style.display="block";return}
+ $("err").style.display="none";logged=true;$("login").classList.add("hidden");$("app").classList.remove("hidden");
+ $("roleBadge").textContent=role==="admin"?"🛡️ Admin":"🎓 Student";$("adminNav").style.display=role==="admin"?"flex":"none";renderProfile();loadPage();
+}
+$("studentRole").onclick=()=>{role="student";$("studentRole").classList.add("active");$("adminRole").classList.remove("active");$("demo").innerHTML="<b>Student Demo</b><br>Username: student &nbsp; Password: student123<br>Students have view-only access."};
+$("adminRole").onclick=()=>{role="admin";$("adminRole").classList.add("active");$("studentRole").classList.remove("active");$("demo").innerHTML="<b>Admin Demo</b><br>Username: admin &nbsp; Password: admin123<br>Admin can edit student information."};
+$("loginBtn").onclick=login;$("password").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+$("logout").onclick=()=>{logged=false;$("app").classList.add("hidden");$("login").classList.remove("hidden");$("username").value="";$("password").value="";location.hash="dashboard"};
+window.addEventListener("hashchange",loadPage);
+document.querySelectorAll("[data-go]").forEach(x=>x.addEventListener("click",()=>go(x.dataset.go)));
+$("payBtn").onclick=()=>toast("Payment gateway opened in demo mode.");
+document.querySelectorAll(".eventBtn").forEach(x=>x.onclick=()=>toast("Event registration completed in demo mode."));
+document.querySelectorAll(".supportBtn").forEach(x=>x.onclick=()=>toast("Support request created successfully."));
+$("saveBtn").onclick=()=>{profile={name:$("editName").value||profile.name,email:$("editEmail").value||profile.email,phone:$("editPhone").value||profile.phone,course:$("editCourse").value,year:$("editYear").value,cgpa:$("editCgpa").value||profile.cgpa};localStorage.setItem("campusProfile",JSON.stringify(profile));renderProfile();toast("Student profile updated successfully.")};
+$("resetBtn").onclick=fillAdmin;
+$("theme").onclick=()=>{document.body.style.filter=document.body.style.filter?"":"brightness(.9)";toast("Appearance updated in demo mode.")};
+renderProfile();
+</script>
+</body>
+</html>
